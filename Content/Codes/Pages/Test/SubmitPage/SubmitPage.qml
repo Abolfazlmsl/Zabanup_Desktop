@@ -1108,7 +1108,7 @@ Item {
                                                     anchors.left: lbl_QNumberS2.right
                                                     verticalAlignment: Qt.AlignVCenter
 
-                                                    text: index + 40
+                                                    text: model_answer.get(questionNumberSec1+index)["answer"]
                                                     font.family: segoeUI.name
                                                     font.pixelSize: Qt.application.font.pixelSize * 1
 
@@ -1201,7 +1201,7 @@ Item {
                                                     anchors.left: lbl_QNumberS3.right
                                                     verticalAlignment: Qt.AlignVCenter
 
-                                                    text: index + 40
+                                                    text: model_answer.get(questionNumberSec1+questionNumberSec2+index)["answer"]
                                                     font.family: segoeUI.name
                                                     font.pixelSize: Qt.application.font.pixelSize * 1
 

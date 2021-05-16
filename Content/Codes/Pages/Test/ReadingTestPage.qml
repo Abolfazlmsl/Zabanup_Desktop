@@ -189,17 +189,147 @@ Item {
         }
         section3_Count = counter2
 
-        model_ans.clear()
-
         passage = false
         qN1 = counter_check
         qN2 = counter_check1
         qN3 = counter_check2
 
+        model_ans.clear()
+        model_answer.clear()
 
         //-- preset answer model --//
         for(var i=0; i<counter_check+counter_check1+counter_check2; i++){
             model_ans.append({"answer":""})
+            model_answer.append({"answer":""})
+        }
+
+        var mainObj = []
+        var num = 0
+        var counter = 0
+        for (var jj=0; jj<root._FullTestQuestions_1.count; jj++){
+            mainObj = []
+            num = 0
+            mainObj.push(JSON.parse(JSON.stringify(root._FullTestQuestions_1.get(jj))))
+            if(mainObj[0]['type'].name === "Multiple choice"){
+                num = getTotalQuestion_1(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "completing summary paragraph"){
+                num = getTotalQuestion_2(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "True False Not Given" || mainObj[0]['type'].name === "classifying information"
+                      || mainObj[0]['type'].name === "matching heading" || mainObj[0]['type'].name === "Yes No NotGiven"
+                      || mainObj[0]['type'].name === "matching sentence ending" || mainObj[0]['type'].name === "matching information with paragraphs"
+                      || mainObj[0]['type'].name === "sentence completion" || mainObj[0]['type'].name === "matching statements & people & ..."
+                      || mainObj[0]['type'].name === "short answer"){
+                num = getTotalQuestion_1(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", mainObj[0]['questions'][i-counter]['answers'][0]['text'])
+                }
+            }else if (mainObj[0]['type'].name === "map and chart"){
+                num = getTotalQuestion_3(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "main idea"){
+                num = getTotalQuestion_3(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "multiple choice list"){
+                num = 1
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A,B")
+                }
+            }
+            counter += num
+        }
+
+        for (var jj=0; jj<root._FullTestQuestions_2.count; jj++){
+            mainObj = []
+            num = 0
+            mainObj.push(JSON.parse(JSON.stringify(root._FullTestQuestions_2.get(jj))))
+            if(mainObj[0]['type'].name === "Multiple choice"){
+                num = getTotalQuestion_1(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "completing summary paragraph"){
+                num = getTotalQuestion_2(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "True False Not Given" || mainObj[0]['type'].name === "classifying information"
+                      || mainObj[0]['type'].name === "matching heading" || mainObj[0]['type'].name === "Yes No NotGiven"
+                      || mainObj[0]['type'].name === "matching sentence ending" || mainObj[0]['type'].name === "matching information with paragraphs"
+                      || mainObj[0]['type'].name === "sentence completion" || mainObj[0]['type'].name === "matching statements & people & ..."
+                      || mainObj[0]['type'].name === "short answer"){
+                num = getTotalQuestion_1(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", mainObj[0]['questions'][i-counter]['answers'][0]['text'])
+                }
+            }else if (mainObj[0]['type'].name === "map and chart"){
+                num = getTotalQuestion_3(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "main idea"){
+                num = getTotalQuestion_3(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "multiple choice list"){
+                num = 1
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A,B")
+                }
+            }
+            counter += num
+        }
+
+        for (var jj=0; jj<root._FullTestQuestions_3.count; jj++){
+            mainObj = []
+            num = 0
+            mainObj.push(JSON.parse(JSON.stringify(root._FullTestQuestions_3.get(jj))))
+            if(mainObj[0]['type'].name === "Multiple choice"){
+                num = getTotalQuestion_1(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "completing summary paragraph"){
+                num = getTotalQuestion_2(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "True False Not Given" || mainObj[0]['type'].name === "classifying information"
+                      || mainObj[0]['type'].name === "matching heading" || mainObj[0]['type'].name === "Yes No NotGiven"
+                      || mainObj[0]['type'].name === "matching sentence ending" || mainObj[0]['type'].name === "matching information with paragraphs"
+                      || mainObj[0]['type'].name === "sentence completion" || mainObj[0]['type'].name === "matching statements & people & ..."
+                      || mainObj[0]['type'].name === "short answer"){
+                num = getTotalQuestion_1(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", mainObj[0]['questions'][i-counter]['answers'][0]['text'])
+                }
+            }else if (mainObj[0]['type'].name === "map and chart"){
+                num = getTotalQuestion_3(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "main idea"){
+                num = getTotalQuestion_3(mainObj)
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A")
+                }
+            }else if (mainObj[0]['type'].name === "multiple choice list"){
+                num = 1
+                for(var i=counter; i<counter+num; i++){
+                    model_answer.setProperty(i, "answer", "A,B")
+                }
+            }
+            counter += num
         }
     }
 
