@@ -141,7 +141,7 @@ Item {
             }
             questionCount = trArray.length - 1
         }
-         quesCheckNum = questionCount
+        quesCheckNum = questionCount
     }
 
     //-- Get number of questions in questions of type 4 --//
@@ -150,90 +150,7 @@ Item {
         quesCheckNum = 1
     }
 
-    ListModel{
-        id: model_ans
-
-        Component.onCompleted: {
-            //-- preset answer model --//
-            for(var j=0; j<quesCheckNum; j++){
-                model_ans.append({"answer":""})
-                model_answer.append({"answer":""})
-            }
-            startTimer()
-            questionsCheckCount = quesCheckNum
-
-            var mainObj = []
-            mainObj.push(JSON.parse(JSON.stringify(root._PassageTestQuestions.get(0))))
-            if(mainObj[0]['type'].name === "Multiple choice"){
-                getTotalQuestion_1(mainObj)
-                for(var i=0; i<quesCheckNum; i++){
-                    model_answer.setProperty(i, "answer", "A")
-                }
-            }else if (mainObj[0]['type'].name === "completing summary paragraph"){
-                getTotalQuestion_2(mainObj)
-                for(var i=0; i<quesCheckNum; i++){
-                    model_answer.setProperty(i, "answer", "A")
-                }
-            }else if (mainObj[0]['type'].name === "True False Not Given" || mainObj[0]['type'].name === "classifying information"
-                      || mainObj[0]['type'].name === "matching heading" || mainObj[0]['type'].name === "Yes No NotGiven"
-                      || mainObj[0]['type'].name === "matching sentence ending" || mainObj[0]['type'].name === "matching information with paragraphs"
-                      || mainObj[0]['type'].name === "sentence completion" || mainObj[0]['type'].name === "matching statements & people & ..."
-                      || mainObj[0]['type'].name === "short answer"){
-                getTotalQuestion_1(mainObj)
-                for(var i=0; i<quesCheckNum; i++){
-                    model_answer.setProperty(i, "answer", mainObj[0]['questions'][i]['answers'][0]['text'])
-                }
-            }else if (mainObj[0]['type'].name === "map and chart"){
-                getTotalQuestion_3(mainObj)
-                for(var i=0; i<quesCheckNum; i++){
-                    model_answer.setProperty(i, "answer", "A")
-                }
-            }else if (mainObj[0]['type'].name === "main idea"){
-                getTotalQuestion_3(mainObj)
-                for(var i=0; i<quesCheckNum; i++){
-                    model_answer.setProperty(i, "answer", "A")
-                }
-            }else if (mainObj[0]['type'].name === "multiple choice list"){
-                getTotalQuestion_3(mainObj)
-                for(var i=0; i<quesCheckNum; i++){
-                    model_answer.setProperty(i, "answer", "A,B")
-                }
-            }
-        }
-    }
-
     Component.onCompleted: {
-
-
-        //        console.log(JSON.stringify(Utils.data))
-//        questionObj = Utils.data
-//        log("--=-=-= dataz loaded")
-        //        log("assa0" + questionObj.Sections[0].question_count)
-
-        //-- check section count --//
-//        if(questionObj.Sections.length !== 3){
-//            log("Section count is not equal to 3");
-//            return
-//        }
-
-        //-- fill section 1 --//
-        //        model_section1.clear()
-        //        for(var j=0; j<questionObj.Sections[0].questions.length; j++){
-
-        //            console.log("\t ["+j+"] -> " + questionObj.Sections[0].questions[j].type)
-        //            model_section1.append({"type": questionObj.Sections[0].questions[j].type})
-        //        }
-
-        //-- preset answer model --//
-//        for(var i=0; i<questionObj.question_count; i++){
-//            model_ans.append({"answer":""})
-//        }
-
-        /*for(var i=0; i<questionObj.Sections.length; i++){
-            console.log("["+i+"] -> " + questionObj.Sections[i]["section"])
-
-
-        }*/
 
     }
 
@@ -456,19 +373,19 @@ Item {
 
                 color: "#ffffff"
 
-//                DocumentHandler {
-//                    id: documentAnswer
-//                    document: currentObject.textDocument
-//                    cursorPosition: currentObject.cursorPosition
-//                    selectionStart: currentObject.selectionStart
-//                    selectionEnd: currentObject.selectionEnd
+                //                DocumentHandler {
+                //                    id: documentAnswer
+                //                    document: currentObject.textDocument
+                //                    cursorPosition: currentObject.cursorPosition
+                //                    selectionStart: currentObject.selectionStart
+                //                    selectionEnd: currentObject.selectionEnd
 
-//                    //                    textColor: colorDialog.color
-//                    //                    Component.onCompleted: document.load("qrc:/Content/Codes/Pages/Test/HTML/Test.htm")
-//                    //                    onLoaded: {
-//                    //                        textArea.text = text
-//                    //                    }
-//                }
+                //                    //                    textColor: colorDialog.color
+                //                    //                    Component.onCompleted: document.load("qrc:/Content/Codes/Pages/Test/HTML/Test.htm")
+                //                    //                    onLoaded: {
+                //                    //                        textArea.text = text
+                //                    //                    }
+                //                }
 
 
                 ListModel{
@@ -527,6 +444,7 @@ Item {
 
                         passage = true
                         qN1 = questionCount
+                        getAPIanswers()
                     }
                 }
 
@@ -1008,7 +926,7 @@ Item {
             id: radio_AD
 
             width: parent.width
-//                   height: item.qHeight + (lbl_size_2.implicitHeight * 1.3)
+            //                   height: item.qHeight + (lbl_size_2.implicitHeight * 1.3)
             objectName: index1
             height: 250
             sizeR: ratios //-- module size --//
@@ -1055,6 +973,55 @@ Item {
         }
     }
 
+    function getAPIanswers(){
+        model_ans.clear()
+        model_answer.clear()
+        //-- preset answer model --//
+        for(var j=0; j<quesCheckNum; j++){
+            model_ans.append({"answer":""})
+            model_answer.append({"answer":""})
+        }
+        startTimer()
+        questionsCheckCount = quesCheckNum
+
+        var mainObj = []
+        mainObj.push(JSON.parse(JSON.stringify(root._PassageTestQuestions.get(0))))
+        if(mainObj[0]['type'].name === "Multiple choice"){
+            getTotalQuestion_1(mainObj)
+            for(var i=0; i<quesCheckNum; i++){
+                model_answer.setProperty(i, "answer", "A")
+            }
+        }else if (mainObj[0]['type'].name === "completing summary paragraph"){
+            getTotalQuestion_2(mainObj)
+            for(var i=0; i<quesCheckNum; i++){
+                model_answer.setProperty(i, "answer", "A")
+            }
+        }else if (mainObj[0]['type'].name === "True False Not Given" || mainObj[0]['type'].name === "classifying information"
+                  || mainObj[0]['type'].name === "matching heading" || mainObj[0]['type'].name === "Yes No NotGiven"
+                  || mainObj[0]['type'].name === "matching sentence ending" || mainObj[0]['type'].name === "matching information with paragraphs"
+                  || mainObj[0]['type'].name === "sentence completion" || mainObj[0]['type'].name === "matching statements & people & ..."
+                  || mainObj[0]['type'].name === "short answer"){
+            getTotalQuestion_1(mainObj)
+            for(var i=0; i<quesCheckNum; i++){
+                model_answer.setProperty(i, "answer", mainObj[0]['questions'][i]['answers'][0]['text'])
+            }
+        }else if (mainObj[0]['type'].name === "map and chart"){
+            getTotalQuestion_3(mainObj)
+            for(var i=0; i<quesCheckNum; i++){
+                model_answer.setProperty(i, "answer", "A")
+            }
+        }else if (mainObj[0]['type'].name === "main idea"){
+            getTotalQuestion_3(mainObj)
+            for(var i=0; i<quesCheckNum; i++){
+                model_answer.setProperty(i, "answer", "A")
+            }
+        }else if (mainObj[0]['type'].name === "multiple choice list"){
+            getTotalQuestion_3(mainObj)
+            for(var i=0; i<quesCheckNum; i++){
+                model_answer.setProperty(i, "answer", "A,B")
+            }
+        }
+    }
 
     //-- test --//
     Button{

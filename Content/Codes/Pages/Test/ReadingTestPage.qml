@@ -45,51 +45,8 @@ Item {
 
     objectName: "ReadingTestPage"
 
-    //-- Get number of questions in questions of type 1 --//
-    function getTotalQuestion_1(data){
-        var questionCount = 0
-        questionCount = data[0]['questions'].length
-        return questionCount
-    }
-
-    //-- Get number of questions in questions of type 2 --//
-    function getTotalQuestion_2(data){
-
-        var questionCount = 0
-        questionSplit = []
-        questionText = ""
-
-        questionText = ConvertRTFtoPlain.rtfToPlain(data[0]['questions'][0]['text'])
-
-        questionSplit = questionText.split(" ")
-
-        questionCount = 0
-        for(var i =  0 ; i < questionSplit.length ; i++) if(questionSplit[i] === "_BLANK") questionCount++;
-        return questionCount
-    }
-
-    //-- Get number of questions in questions of type 3 --//
-    function getTotalQuestion_3(data){
-        var questionCount = 0
-        questionText = ""
-        trArray = []
-        questionText = ConvertRTFtoPlain.removeBackSlashT(data[0]['questions'][0]['text'])
-
-        var tableIndx = questionText.indexOf('<table')
-        if(tableIndx !== -1){
-
-            var indx = questionText.indexOf('<tr')
-            while(indx !== -1){
-                trArray.push({'row': questionText.substring(indx , questionText.indexOf('</tr>') + 5)})
-                questionText = questionText.replace(questionText.substring(indx , questionText.indexOf('</tr>') + 5) , "")
-                indx = questionText.indexOf('<tr');
-            }
-            questionCount = trArray.length - 1
-        }
-        return questionCount
-    }
-
-    function getTotalQuestions(){
+    Component.onCompleted: {
+        print("salam")
         var counter = 0
         var counter_check = 0
         var num = 0
@@ -370,27 +327,6 @@ Item {
         footer_Reading.resetTimer()
     }
 
-    ListModel{id: model_ans}
-
-
-    Component.onCompleted: {
-        //        console.log(JSON.stringify(Utils.data))
-        //        questionObj = Utils.data
-        log("--=-=-= data loaded")
-
-        //-- check section count --//
-        //        if(questionObj.Sections.length !== 3){
-        //            log("Section count is not equal to 3");
-        //            return
-        //        }
-
-        /*for(var i=0; i<questionObj.Sections.length; i++){
-            console.log("["+i+"] -> " + questionObj.Sections[i]["section"])
-
-
-        }*/
-
-    }
 
     //-- size porpos --//
     Label{id: lbl_size; visible: false; text: "Not Given"; font.pixelSize: Qt.application.font.pixelSize*sizeRatio}
@@ -646,7 +582,7 @@ Item {
                             //                            questionObj = Utils.data
 
                             questionCount_1 = 0
-                            getTotalQuestions()
+//                            getTotalQuestions()
                             //-- fill section 1 --//
                             model_section1.clear()
                             var num = 0
@@ -893,7 +829,7 @@ Item {
                         Component.onCompleted: {
 
                             questionCount_2 = 0
-                            getTotalQuestions()
+//                            getTotalQuestions()
                             var num = 0
                             //-- fill section 1 --//
                             model_section2.clear()
@@ -1142,7 +1078,7 @@ Item {
                         Component.onCompleted: {
 
                             questionCount_3 = 0
-                            getTotalQuestions()
+//                            getTotalQuestions()
                             var num = 0
                             //-- fill section 1 --//
                             model_section3.clear()
@@ -1887,5 +1823,48 @@ Item {
         }
     }
 
+    //-- Get number of questions in questions of type 1 --//
+    function getTotalQuestion_1(data){
+        var questionCount = 0
+        questionCount = data[0]['questions'].length
+        return questionCount
+    }
+
+    //-- Get number of questions in questions of type 2 --//
+    function getTotalQuestion_2(data){
+
+        var questionCount = 0
+        questionSplit = []
+        questionText = ""
+
+        questionText = ConvertRTFtoPlain.rtfToPlain(data[0]['questions'][0]['text'])
+
+        questionSplit = questionText.split(" ")
+
+        questionCount = 0
+        for(var i =  0 ; i < questionSplit.length ; i++) if(questionSplit[i] === "_BLANK") questionCount++;
+        return questionCount
+    }
+
+    //-- Get number of questions in questions of type 3 --//
+    function getTotalQuestion_3(data){
+        var questionCount = 0
+        questionText = ""
+        trArray = []
+        questionText = ConvertRTFtoPlain.removeBackSlashT(data[0]['questions'][0]['text'])
+
+        var tableIndx = questionText.indexOf('<table')
+        if(tableIndx !== -1){
+
+            var indx = questionText.indexOf('<tr')
+            while(indx !== -1){
+                trArray.push({'row': questionText.substring(indx , questionText.indexOf('</tr>') + 5)})
+                questionText = questionText.replace(questionText.substring(indx , questionText.indexOf('</tr>') + 5) , "")
+                indx = questionText.indexOf('<tr');
+            }
+            questionCount = trArray.length - 1
+        }
+        return questionCount
+    }
 
 }

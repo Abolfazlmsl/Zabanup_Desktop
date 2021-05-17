@@ -60,7 +60,6 @@ Page{
     property var remainhour: 0
     property var remainsecond: 0
 
-
     signal searchClick
     onSearchClick: {
         console.log("Search Clicked !!!!!")
@@ -81,6 +80,7 @@ Page{
     property string _BTN_DICTIONARY:    "DICTIONARY"
 
     ListModel{id: model_answer}
+    ListModel{id: model_ans}
 
     anchors.fill: parent
 

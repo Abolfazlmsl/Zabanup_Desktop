@@ -19,6 +19,7 @@ Item {
     property var questionNumberSec1
     property var questionNumberSec2
     property var questionNumberSec3
+    property var counter: 0
 
     Rectangle{
         id: rootAnswerPage
@@ -70,7 +71,7 @@ Item {
 
                                 anchors.top: parent.top
 
-//                                color: "#5500ff00"
+                                //                                color: "#5500ff00"
 
                                 ColumnLayout{
                                     anchors.fill: parent
@@ -83,22 +84,22 @@ Item {
 
                                         //-- Image Profile --//
                                         Image {
-                                             width: parent.width / 2
-                                             height: parent.height //* 0.95
+                                            width: parent.width / 2
+                                            height: parent.height //* 0.95
 
-                                             sourceSize.width: width
-                                             sourceSize.height: height
+                                            sourceSize.width: width
+                                            sourceSize.height: height
 
-                                             anchors.horizontalCenter: parent.horizontalCenter
-                                             anchors.verticalCenter: parent.verticalCenter
+                                            anchors.horizontalCenter: parent.horizontalCenter
+                                            anchors.verticalCenter: parent.verticalCenter
 
-                                             fillMode: Image.PreserveAspectFit
+                                            fillMode: Image.PreserveAspectFit
 
-                                             verticalAlignment: Qt.AlignVCenter
-                                             horizontalAlignment: Qt.AlignHCenter
+                                            verticalAlignment: Qt.AlignVCenter
+                                            horizontalAlignment: Qt.AlignHCenter
 
-                                             source: "qrc:/Content/Images/Other/avatar_Icon.png"
-                                         }
+                                            source: "qrc:/Content/Images/Other/avatar_Icon.png"
+                                        }
 
                                     }
 
@@ -220,8 +221,20 @@ Item {
                                             verticalAlignment: Qt.AlignVCenter
                                             horizontalAlignment: Qt.AlignHCenter
 
-                                            text: passage? "1" + " / " + (questionsCheckCount):"1" + " / " + (questionCount_1+questionCount_2+questionCount_3)
-                                            font.family: iranSansFAnum.name
+                                            text: {
+                                                if (passage){
+                                                    for (var i=0; i<questionsCheckCount; i++){
+                                                        if (model_ans.get(i)["answer"] === model_answer.get(i)["answer"]){counter++}
+                                                    }
+                                                    return ((counter) + " / " + (questionsCheckCount))
+                                                }else{
+                                                    for (var i=0; i<questionNumberSec1+questionNumberSec2+questionNumberSec3; i++){
+                                                        if (model_ans.get(i)["answer"] === model_answer.get(i)["answer"]){counter++}
+                                                    }
+                                                    return ((counter) + " / " + (questionNumberSec1+questionNumberSec2+questionNumberSec3))
+                                                }
+                                            }
+                                            font.family: iranSansFAnum.nameS
                                             font.pixelSize: Qt.application.font.pixelSize * 2.1
                                             minimumPixelSize: 10
                                             fontSizeMode: Text.Fit
@@ -251,7 +264,7 @@ Item {
                                             verticalAlignment: Qt.AlignVCenter
                                             horizontalAlignment: Qt.AlignHCenter
 
-                                            text: "7.8"
+                                            text: ((counter/model_ans.count)*10).toFixed(1)
                                             font.family: iranSansFAnum.name
                                             font.pixelSize: Qt.application.font.pixelSize * 2.6
 
