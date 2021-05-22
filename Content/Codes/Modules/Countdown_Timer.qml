@@ -23,7 +23,13 @@ Rectangle{
     signal stopTimer
     onStopTimer: {
         remainhour = lbl_Timer.hour
+        if (remainhour<10){
+            remainhour = "0" + remainhour
+        }
         remainsecond = lbl_Timer.seconds
+        if (remainsecond<10){
+            remainsecond = "0" + remainsecond
+        }
         testTimer.stop()
     }
 
